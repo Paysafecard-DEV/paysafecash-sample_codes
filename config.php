@@ -27,7 +27,7 @@ $config = [
      * might be disbaled in production mode
      */
 
-    'logging'     => true,
+    'logging'     => false,
 
     /*
      * Environment

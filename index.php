@@ -90,6 +90,7 @@ if (count($_POST) > 0) {
 
     // your scripts notification URL, this url is called to notify your script a payment has been processed
     $webhook_url = getURL() . "webhook.php";
+    //$webhook_url = "https://eng34j8ime064.x.pipedream.net/";
 
     /*
      * // This is a sample how to use the optional parameters

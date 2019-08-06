@@ -21,7 +21,7 @@ $pscpayment = new PaysafecardCashController($config['psc_key'], $config['environ
         // Currency of this payment , i.e. "EUR"
         $currency = $_POST["currency"];
         
-        // the customer ID (merchant client id)
+        // the customer ID (merchant client id), it needs to be unique per customer and must not submit customer sensitive data in plain text
         $customer_id = $_POST["customer_id"];
         
         // the customers IP adress

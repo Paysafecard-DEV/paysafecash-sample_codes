@@ -299,6 +299,9 @@ class PaysafecardCashController
             case 3037:
                 $this->response["message"] = 'The time set in the parameter "expiration_time_minutes" is not in the allowed span (between 5 and 20160 minutes).';
                 break;
+            case 4003:
+                $this->response["message"] = 'In Canada, United States or United Kingdom, these limits are exceptionally different. Canada: 10 CAD – 3000 CAD United States: 10 USD – 500 USD United Kingdom: 0.01 GBP – 499 GBP';
+                break;
             default:
                 $this->response["message"] = 'Transaction could not be initiated due to connection problems. If the problem persists, please contact our support. ';
                 break;

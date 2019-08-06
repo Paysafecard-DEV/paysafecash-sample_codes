@@ -19,7 +19,14 @@ $config = [
      * Set key, your psc key
      */
 
-    'psc_key'     => "psc_B1bxzkp5lQ4df3gnXtNan2HUd6kFio-",
+    'psc_key'     => "psc_XXXXXXXXXXXXXXXXX",
+
+	/*
+     * Certificate:
+     * Put here your certificate name
+     */
+
+    'psc_certificate'     => "merchant_webhook_signer_XXXX.pem",
 
     /*
      * Logging:
@@ -27,7 +34,7 @@ $config = [
      * might be disbaled in production mode
      */
 
-    'logging'     => false,
+    'logging'     => true,
 
     /*
      * Environment

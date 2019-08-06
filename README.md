@@ -1,44 +1,43 @@
-# Paysafecard payment api PHP class & examples
-## currently developed under: psc.hosting-core.de
+# Paysafecash payment api PHP class & examples
+
 
 ## minimal basic usage
-
+index.php
 ```php
 // include the payment class
-include_once 'class-payment.php';
+include_once 'PaymentClass.php';
 
-// set necessary parameters
-$debug = true;
-$key = "psc_abcde-fg1234-5678h"; // use your own PSC key
+// include config
+include_once "config.php";
 
 // create a new payment controller object
-$pscpayment = new PaysafecardPaymentController($key, true);
+$pscpayment = new PaysafecardCashController($config['psc_key'], $config['environment']);
 
 // define needed payment parameters
 
-        // Amount of this paymen, i.e. "10.00"
-        $amount = "10.00";
-
-        // Currency of this payment , i.e. "EUR", a comprehensive list can be found here (Link to allowed currencies?)
-        $currency = "EUR";
-
-        // the customer ID
-        $customer_id = md5('customer123');
-
-        // the customers IP address
+        // Amount of this payment, i.e. "10.00"
+        $amount = $_POST["amount"];
+        
+        // Currency of this payment , i.e. "EUR"
+        $currency = $_POST["currency"];
+        
+        // the customer ID (merchant client id)
+        $customer_id = $_POST["customer_id"];
+        
+        // the customers IP adress
         $customer_ip = $_SERVER['REMOTE_ADDR'];
-
+        
         // the redirect url after a successful payment, the customer will be sent to this url on success
-        $okurl = "http://yourdomain.com/success.php?action=ok&payment={payment_id}";
-
+        $success_url = getURL() . "success.php?payment_id={payment_id}";
+        
         // the redirect url after a failed / aborted payment, the customer will be redirected to this url on failure
-        $errorurl = "http://yourdomain.com/failure.php?payment={payment_id}";
-
+        $failure_url = getURL() . "failure.php?payment_id={payment_id}";
+        
         // your scripts notification URL, this url is called to notify your script a payment has been processed
-        $notifyurl = "http://yourdomain.com/notification.php?action=notify&payment={payment_id}";
+        $webhook_url = getURL() . "webhook.php";
 
 // creating a payment and receive the response
-$response = $pscpayment->createPayment($amount, $currency, $customer_id, $customer_ip, $okurl, $errorurl, $notifyurl, $correlation_id);
+$response = $pscpayment->initiatePayment($amount, $currency, $customer_id, $customer_ip, $success_url, $failure_url, $webhook_url, $customer_data, $_POST["variable_time"], $correlation_id);
 
 // handle the response
 if ($response == false) {
@@ -53,10 +52,35 @@ if ($response == false) {
                 }
             }
         } else if (isset($response["object"])) {
-            if (isset($response["redirect"])) {
-                header("Location: " . $response["redirect"]['auth_url']);
+                if (isset($response["redirect"])) {
+                       header("Location: " . $response["redirect"]['auth_url']);
+                }
             }
-        }
+```
+##Important
+
+look at the comment on line 237 at index.php
+#
+
+config.php
+
+put here your API Key and Certificate.
+```php
+
+    /*
+     * Key:
+     * Set key, your psc key
+     */
+
+    'psc_key'     => "psc_XXXXXXXXXXXXXXXX",
+
+	/*
+     * Certificate:
+     * Put here your certificate name
+     */
+
+    'psc_certificate'     => "merchant_webhook_signer_XXXX.pem",
+
 ```
 
 ## examples and extended usage can be found within the script.

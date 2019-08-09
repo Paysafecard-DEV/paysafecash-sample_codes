@@ -39,6 +39,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="<?php echo getURL(); ?>">Payment</a></li>
+		<li class=""><a href="<?php echo getURL(); ?>/refund.php">Refund</a></li>
             </ul>
         </div>
         <!--/.nav-collapse -->
